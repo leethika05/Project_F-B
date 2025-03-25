@@ -1,0 +1,124 @@
+/* Global Styling */
+.dashboard-container {
+  padding: 40px;
+  max-width: 900px;
+  margin: 40px auto;
+  /* background-color: #01060c; */
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0);
+  color: #e6edf3;
+}
+
+/* Wallet Button */
+.wallet-container {
+  position: absolute;
+  margin-top: 10px;
+  top: 0%;
+  right: 5px;
+}
+
+.wallet-container button {
+  padding: 10px 20px;
+  background-color: #ff4d4f;
+  color: #e6edf3;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.wallet-container button:hover {
+  background-color: #e04344;
+}
+
+/* Dashboard Title */
+.dashboard-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #ff4d4f;
+  margin-bottom: 24px;
+}
+
+/* Station List */
+.stations-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.station-card {
+  background-color: #21262d;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.station-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(255, 77, 79, 0.4);
+}
+
+.station-card h2 {
+  font-size: 22px;
+  color: #ff4d4f;
+}
+
+.station-card p {
+  font-size: 18px;
+  color: #e6edf3;
+}
+
+/* Booking Form */
+.booking-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking-form select,
+.booking-form button {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  background-color: #21262d;
+  color: #e6edf3;
+  transition: border-color 0.3s ease;
+}
+
+.booking-form select:focus,
+.booking-form button:hover {
+  border-color: #ff4d4f;
+  outline: none;
+}
+
+.booking-form button {
+  background-color: #ff4d4f;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.booking-form button:hover {
+  background-color: #e04344;
+}
+
+/* Success & Error Messages */
+.success-message {
+  color: #4caf50;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.error-message {
+  color: #ff4d4f;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}

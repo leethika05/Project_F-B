@@ -1,0 +1,83 @@
+/* Booking Container */
+.booking-container {
+  padding: 40px;
+  max-width: 400px;
+  background-color: #161b22;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  margin: 40px auto;
+  transition: transform 0.3s ease;
+  animation: fadeIn 0.6s ease;
+}
+
+.booking-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ff4d4f;
+}
+
+/* Form Styling */
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+select, button {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+}
+
+select {
+  background-color: #21262d;
+  color: #e6edf3;
+  border: 1px solid #30363d;
+  transition: border-color 0.3s;
+}
+
+select:focus {
+  border-color: #ff4d4f;
+  outline: none;
+}
+
+/* Button Styling */
+button {
+  background-color: #ff4d4f;
+  color: #e6edf3;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #e04344;
+  transform: scale(1.05);
+}
+
+/* Messages */
+.success-message {
+  color: #4caf50;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.error-message {
+  color: #ff4d4f;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BookingProvider } from './context/BookingContext';
+import { WalletProvider } from './context/WalletContext';
+import { ProfileProvider } from './context/ProfileContext';
+import Home from './pages/Home';
+import Login from './components/LoginForm';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import Wallet from './pages/Wallet';
+import BookingHistory from './pages/BookingHistory';
+import ContactUs from './pages/ContactUs';
+import Booking from './pages/Booking';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BookingProvider>
+      <WalletProvider>
+        <ProfileProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/wallet" element={<Wallet />} />
+              <Route path="/booking-history" element={<BookingHistory />} />
+              <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/booking" element={<Booking />} />
+            </Routes>
+          </Router>
+        </ProfileProvider>
+      </WalletProvider>
+    </BookingProvider>
   );
-}
+};
 
 export default App;

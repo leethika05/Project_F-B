@@ -1,0 +1,115 @@
+.signup-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-form {
+  background: rgba(255, 255, 255, 0.4);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #1a1a1a, #292929);
+  width: 320px;
+  text-align: center;
+  border-radius: 13%;
+  animation: fadeIn 0.6s ease;
+}
+
+.signup-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: white;
+
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.signup-form input:focus {
+  border-color: #ff4d4f;
+  outline: none;
+}
+
+/* Password Field Styling */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100%;
+  padding: 12px 40px 12px 12px; /* Extra padding on the right for the eye icon */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.password-field .toggle-password {
+  position: absolute;
+  top: 43%;
+  right: 12px;
+
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.password-field .toggle-password:hover {
+  color: #ff4d4f;
+}
+
+.signup-form button {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.signup-form button:hover {
+  background-color: #ff3d3f;
+}
+
+.signup-form p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: white;
+}
+
+.signup-form a {
+  color: #ff4d4f;
+  text-decoration: none;
+}
+
+.signup-form a:hover {
+  text-decoration: underline;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
