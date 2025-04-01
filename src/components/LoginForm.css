@@ -64,6 +64,10 @@ input:focus {
   outline: none;
   background-color: #444;
 }
+input:hover{
+  outline: none;
+  background-color: #444;
+}
 
 /* Button */
 button {
@@ -71,7 +75,7 @@ button {
   padding: 14px;
   border: none;
   border-radius: 8px;
-  background-color: #ff4d4f; /* Updated red */
+  background-color: #ff4d4f; 
   color: #fff;
   font-size: 18px;
   font-weight: 700;

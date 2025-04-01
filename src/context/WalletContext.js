@@ -6,30 +6,46 @@ export const WalletProvider = ({ children }) => {
   const [balance, setBalance] = useState(100); // Starting balance ₹100
   const [transactions, setTransactions] = useState([]);
 
+  // Add money to the wallet
   const addMoney = (amount) => {
-    setBalance((prev) => prev + amount);
-    const newTransaction = {
-      id: transactions.length + 1,
-      type: 'Credit',
-      amount,
-      time: new Date().toLocaleString(),
-    };
-    setTransactions((prev) => [newTransaction, ...prev]);
-  };
-
-  const payFine = (amount) => {
-    if (balance >= amount) {
-      setBalance((prev) => prev - amount);
+    // Update balance and transaction list atomically
+    setBalance((prevBalance) => {
+      const newBalance = prevBalance + amount;
+      
+      // Add a new transaction for the added money
       const newTransaction = {
         id: transactions.length + 1,
-        type: 'Debit',
+        type: 'Credit',
         amount,
         time: new Date().toLocaleString(),
       };
-      setTransactions((prev) => [newTransaction, ...prev]);
+      setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
+      
+      return newBalance; // Return the updated balance
+    });
+  };
+
+  // Pay fine from the wallet
+  const payFine = (amount) => {
+    if (balance >= amount) {
+      // Update balance and transaction list atomically
+      setBalance((prevBalance) => {
+        const newBalance = prevBalance - amount;
+
+        // Add a new transaction for the fine payment
+        const newTransaction = {
+          id: transactions.length + 1,
+          type: 'Debit',
+          amount,
+          time: new Date().toLocaleString(),
+        };
+        setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
+
+        return newBalance; // Return the updated balance
+      });
       return true;
     }
-    return false;
+    return false; // If balance is insufficient
   };
 
   return (

@@ -14,7 +14,7 @@ const LoginForm = () => {
 
     if (email.endsWith('@vitstudent.ac.in') && password.length >= 6) {
       alert(`${isSignup ? 'Signed Up' : 'Logged In'} Successfully!`);
-      navigate('/dashboard'); // ✅ Redirect to dashboard after successful login
+      navigate('/dashboard');
     } else {
       alert('Invalid email or password');
     }

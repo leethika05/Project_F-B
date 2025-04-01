@@ -1,0 +1,99 @@
+/* Container for the entire UPI payment section */
+.upi-payment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: transparent; /* Transparent background */
+  color: #fff; /* White text color for readability */
+}
+
+/* Card for UPI payment details */
+.upi-payment-card {
+  background-color: rgba(0, 0, 0, 0.7); /* Slightly transparent dark background */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  backdrop-filter: blur(10px); /* Optional: Adds a blur effect behind the card */
+}
+
+/* Title for the UPI payment card */
+.upi-payment-card h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #f2f2f2; /* Light color for title */
+}
+
+/* Styling for the amount display */
+.upi-payment-card p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #f2f2f2; /* Light color for amount text */
+}
+
+/* Styling for the input section */
+.upi-input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Styling for the input field */
+.upi-input-section input {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #333; /* Dark border to match the theme */
+  background-color: #333; /* Dark input field */
+  color: #fff; /* White text */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.upi-input-section input:focus {
+  outline: none;
+  border-color: #ff5722; /* Accent color for focus (using orange-red color from booking system) */
+  background-color: #444; /* Darker background when focused */
+}
+
+/* Styling for the button */
+.upi-input-section button {
+  padding: 12px;
+  font-size: 18px;
+  background-color: #ff4d4f; /* Orange-red background color from booking theme */
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.upi-input-section button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.upi-input-section button:hover {
+  background-color: #ff4d4f; /* Darker shade of the accent color on hover */
+}
+
+/* Styling for the payment status message */
+.payment-status {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #f1c40f;
+  font-weight: bold;
+}
+
+/* Additional error and success styles */
+.payment-status.error {
+  color: #e74c3c; /* Red for error messages */
+}
+
+.payment-status.success {
+  color: #2ecc71; /* Green for success messages */
+}
