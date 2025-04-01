@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useWallet } from '../context/WalletContext';
 import { useBooking } from '../context/BookingContext';
 import Navbar from '../components/Navbar';
 import './Dashboard.css';
 
+const generateRandomCycles = () => Math.floor(Math.random() * (30 - 25 + 1)) + 25;
+
 const stations = [
-  { id: 1, name: 'PRP', availableCycles: 5 },
-  { id: 2, name: 'SJT', availableCycles: 3 },
-  { id: 3, name: 'TT', availableCycles: 7 },
-  { id: 4, name: 'SMV', availableCycles: 2 },
-  { id: 5, name: 'CDMM', availableCycles: 4 },
-  { id: 6, name: 'GDN', availableCycles: 6 },
+  { id: 1, name: 'PRP', availableCycles: generateRandomCycles() },
+  { id: 2, name: 'SJT', availableCycles: generateRandomCycles() },
+  { id: 3, name: 'TT', availableCycles: generateRandomCycles() },
+  { id: 4, name: 'SMV', availableCycles: generateRandomCycles() },
+  { id: 5, name: 'CDMM', availableCycles: generateRandomCycles() },
+  { id: 6, name: 'GDN', availableCycles: generateRandomCycles() },
 ];
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [wallet, setWallet] = useState(100);
+  const { balance, addMoney } = useWallet(); // Get balance from the wallet context
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [message, setMessage] = useState('');
+  const [updatedStations, setUpdatedStations] = useState(stations);
   const { addBooking } = useBooking();
 
   const restrictedPairs = [
     ['PRP', 'SJT'],
     ['SJT', 'TT'],
     ['SMV', 'CDMM'],
+    ['SMV', 'GDN'],
+    ['CDMM', 'GDN'],
   ];
 
   const handleBooking = () => {
@@ -34,14 +40,29 @@ const Dashboard = () => {
         return;
       }
 
-      if (wallet >= 20) {
-        setWallet(wallet - 20);
-        addBooking(source, destination, 20);
-        setMessage(`✅ Cycle booked from ${source} to ${destination} successfully!`);
-        setSource('');
-        setDestination('');
+      const sourceStation = updatedStations.find(station => station.name === source);
+      
+      if (sourceStation && sourceStation.availableCycles > 0) {
+        if (balance >= 20) {
+          addMoney(-20); // Deduct from balance after booking
+          addBooking(source, destination, 20);
+
+          const updatedSourceStation = { ...sourceStation, availableCycles: sourceStation.availableCycles - 1 };
+
+          setUpdatedStations(prevStations =>
+            prevStations.map(station =>
+              station.name === source ? updatedSourceStation : station
+            )
+          );
+
+          setMessage(`✅ Cycle booked from ${source} to ${destination} successfully!`);
+          setSource('');
+          setDestination('');
+        } else {
+          setMessage('⚠️ Insufficient balance.');
+        }
       } else {
-        setMessage('⚠️ Insufficient balance.');
+        setMessage('⚠️ No available cycles at the selected source station.');
       }
     } else {
       setMessage('⚠️ Please select both source and destination.');
@@ -51,20 +72,17 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-
-      {/* Wallet Button */}
       <div className="wallet-container">
-        <button onClick={() => alert(`Current Balance: ₹${wallet}`)}>
-          Wallet: ₹{wallet}
+        <button onClick={() => alert(`Current Balance: ₹${balance}`)}>
+          Wallet: ₹{balance}
         </button>
       </div>
 
       <div className="dashboard-container">
         <h1 className="dashboard-title">Dashboard</h1>
 
-        {/* Station List */}
         <div className="stations-list">
-          {stations.map(station => (
+          {updatedStations.map(station => (
             <div key={station.id} className="station-card">
               <h2>{station.name}</h2>
               <p>Available Cycles: {station.availableCycles}</p>
@@ -72,11 +90,10 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* Booking Form */}
         <div className="booking-form">
           <select value={source} onChange={(e) => setSource(e.target.value)}>
             <option value="">Select Source</option>
-            {stations.map(station => (
+            {updatedStations.map(station => (
               <option key={station.id} value={station.name}>
                 {station.name}
               </option>
@@ -85,7 +102,7 @@ const Dashboard = () => {
 
           <select value={destination} onChange={(e) => setDestination(e.target.value)}>
             <option value="">Select Destination</option>
-            {stations.map(station => (
+            {updatedStations.map(station => (
               <option key={station.id} value={station.name}>
                 {station.name}
               </option>

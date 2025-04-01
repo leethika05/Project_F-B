@@ -8,11 +8,8 @@ export const WalletProvider = ({ children }) => {
 
   // Add money to the wallet
   const addMoney = (amount) => {
-    // Update balance and transaction list atomically
     setBalance((prevBalance) => {
       const newBalance = prevBalance + amount;
-      
-      // Add a new transaction for the added money
       const newTransaction = {
         id: transactions.length + 1,
         type: 'Credit',
@@ -20,19 +17,15 @@ export const WalletProvider = ({ children }) => {
         time: new Date().toLocaleString(),
       };
       setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
-      
-      return newBalance; // Return the updated balance
+      return newBalance; // Update balance and return the new value
     });
   };
 
   // Pay fine from the wallet
   const payFine = (amount) => {
     if (balance >= amount) {
-      // Update balance and transaction list atomically
       setBalance((prevBalance) => {
         const newBalance = prevBalance - amount;
-
-        // Add a new transaction for the fine payment
         const newTransaction = {
           id: transactions.length + 1,
           type: 'Debit',
@@ -40,8 +33,7 @@ export const WalletProvider = ({ children }) => {
           time: new Date().toLocaleString(),
         };
         setTransactions((prevTransactions) => [newTransaction, ...prevTransactions]);
-
-        return newBalance; // Return the updated balance
+        return newBalance;
       });
       return true;
     }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate to handle routing
 import { useWallet } from '../context/WalletContext';
 import Navbar from '../components/Navbar';
 import './Wallet.css';
@@ -9,15 +9,14 @@ const Wallet = () => {
   const [amount, setAmount] = useState('');
   const [fineAmount, setFineAmount] = useState('');
   const [message, setMessage] = useState({ type: '', text: '' });
-  const [showConfirmation, setShowConfirmation] = useState(false); // state to show confirmation modal
-  const [selectedFineAmount, setSelectedFineAmount] = useState(null); // store fine amount to be paid
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // useNavigate hook to redirect
 
   const handleAddMoney = () => {
     if (!amount || isNaN(amount) || amount <= 0) {
       setMessage({ type: 'error', text: 'Enter a valid amount to add.' });
       return;
     }
+
     navigate('/add-money-upi', { state: { amount: parseFloat(amount) } });
   };
 
@@ -27,24 +26,13 @@ const Wallet = () => {
       return;
     }
 
-    // Show confirmation popup if the fine amount is valid
-    setSelectedFineAmount(parseFloat(fineAmount));
-    setShowConfirmation(true);
-  };
-
-  const confirmPayFine = () => {
-    const paid = payFine(selectedFineAmount);
+    const paid = payFine(parseFloat(fineAmount));
     if (paid) {
-      setMessage({ type: 'success', text: `Fine of ₹${selectedFineAmount} paid successfully.` });
+      setMessage({ type: 'success', text: `Fine of ₹${fineAmount} paid successfully.` });
       setFineAmount('');
     } else {
       setMessage({ type: 'error', text: 'Insufficient balance.' });
     }
-    setShowConfirmation(false); // Close the confirmation popup
-  };
-
-  const cancelPayFine = () => {
-    setShowConfirmation(false); // Close the confirmation popup
   };
 
   return (
@@ -109,20 +97,6 @@ const Wallet = () => {
           </ul>
         )}
       </div>
-
-      {/* Confirmation Modal */}
-      {showConfirmation && (
-        <div className="confirmation-modal">
-          <div className="modal-content">
-            <h3>Confirm Fine Payment</h3>
-            <p>Are you sure you want to pay ₹{selectedFineAmount} as fine?</p>
-            <div className="modal-actions">
-              <button onClick={confirmPayFine}>Yes, Pay</button>
-              <button onClick={cancelPayFine}>Cancel</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
