@@ -1,127 +1,29 @@
-/* Global Styling */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: #0d1117;
-  color: #e6edf3;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* Container */
-.home-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-/* Background Overlay with Animation */
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url('../assests/cycle-3.png') no-repeat center center/cover;
-  opacity: 0.9;
-  z-index: -1;
-  animation: bgZoom 4s infinite alternate ease-in-out;
-}
-
-@keyframes bgZoom {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-  }
-}
-
-/* Title Section */
 .title-section {
   position: absolute;
-  top: 20px;
+  top: 20px; /* Adjust this to position the title closer to the top */
+  left: 50%;
+ /* Horizontally center the title */
   text-align: center;
   z-index: 3;
+  color: brown;
 }
 
-.home-title {
-  font-size: 50px;
-  font-weight: bold;
-  background: linear-gradient(75deg, #ff7f50, white);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 2px;
-  text-shadow: 0px 4px 10px rgba(223, 24, 27, 0.3);
-  animation: fadeInDown 1s ease;
-  transform: scale(1);
-  transition: transform 0.7s ease;
-}
-
-/* Hover Animation */
-.home-title:hover {
-  transform: scale(1.05);
-  transition: transform 0.7s ease;
-}
-
-/* Login Section */
-.login-section {
-  margin-top: 40px;
-}
-
-/* 3D Model Animation */
-.cycle-model {
+.new-title-section {
   position: absolute;
-  bottom: -20px;
+  top: 15px; /* Ensure the title is positioned near the top */
   left: 50%;
-  transform: translateX(-50%);
-  width: 500px;
-  animation: float 5s ease-in-out infinite;
-  z-index: 1;
+  margin-left: -15%; /* Horizontally center the title */
+  text-align: center;
+  z-index: 3;
+  font-size: 23px; /* Adjust size to fit the top of the page */
+  font-weight: 700; /* Bold weight for emphasis */
+  color: #e04344; /* Vibrant red color */
+  letter-spacing: 2px; /* Slight letter spacing for clarity */
+  text-shadow: 0px 4px 8px rgba(224, 67, 68, 0.5), 0px 0px 20px rgba(255, 69, 58, 0.6); /* Soft glowing effect */
+  animation: fadeInUp 1.5s ease-in-out, glowEffect 1.5s ease-in-out infinite alternate; /* Adding a glowing effect animation */
 }
 
-.cycle-model img {
-  width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0px 4px 20px rgba(255, 77, 79, 0.6));
-}
-
-@keyframes float {
-  0% {
-    transform: translate(-50%, 0);
-  }
-  50% {
-    transform: translate(-50%, -10px);
-  }
-  100% {
-    transform: translate(-50%, 0);
-  }
-}
-
-/* Glow Effect on Text */
-.title,
-.cta-button {
-  filter: drop-shadow(0px 0px 20px rgba(255, 77, 79, 0.6));
-}
-
-/* Fade In Animations */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Fade In Animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -131,4 +33,22 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Glowing Effect Animation */
+@keyframes glowEffect {
+  0% {
+    text-shadow: 0px 4px 8px rgba(224, 67, 68, 0.5), 0px 0px 20px rgba(255, 69, 58, 0.6);
+  }
+  50% {
+    text-shadow: 0px 0px 15px rgba(224, 67, 68, 0.8), 0px 0px 30px rgba(255, 69, 58, 1);
+  }
+  100% {
+    text-shadow: 0px 4px 8px rgba(224, 67, 68, 0.5), 0px 0px 20px rgba(255, 69, 58, 0.6);
+  }
+}
+
+
+.new-caption{
+  
 }

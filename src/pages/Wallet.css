@@ -5,11 +5,11 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
   background: url('../assests/cycle-3.png') no-repeat center center/cover;
   color: #e6edf3;
   font-family: 'Poppins', sans-serif;
-}
+} */
 
 
 /* Wallet Container */
@@ -195,3 +195,4 @@ body {
 .modal-actions button:focus {
   outline: none;
 }
+
