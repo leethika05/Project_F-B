@@ -1,86 +1,42 @@
-/* Global Styling */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* BookingHistory.css */
 
-body {
-  background: url('../assests/cycle-bg-1.jpg') no-repeat center center/cover;
-  color: #e6edf3;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* History Container */
-.history-container {
-  padding: 40px;
+.booking-history-container {
+  padding: 30px;
   max-width: 800px;
-  background-color: #161b22;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
-  margin: 40px auto;
-  transition: transform 0.3s ease;
-  animation: fadeIn 0.6s ease;
+  margin: auto;
+  color: #fff;
+  background-color: #111;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 77, 79, 0.4);
+  margin-top: 40px;
 }
 
-.history-title {
-  font-size: 36px;
+.booking-history-container h1 {
+  font-size: 2rem;
+  margin-bottom: 25px;
   text-align: center;
-  margin-bottom: 20px;
   color: #ff4d4f;
 }
 
-/* History Table */
-.history-table {
-  width: 100%;
-  border-collapse: collapse;
-  overflow: hidden;
+.booking-item {
+  background: #1a1a1a;
+  padding: 20px;
+  margin-bottom: 15px;
   border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 77, 79, 0.2);
+  transition: transform 0.2s;
 }
 
-.history-table th,
-.history-table td {
-  padding: 12px;
-  border: 1px solid #30363d;
-  text-align: center;
-  color: #e6edf3;
+.booking-item:hover {
+  transform: scale(1.02);
+  background-color: #222;
 }
 
-.history-table th {
-  background-color: #21262d;
+.booking-item strong {
   color: #ff4d4f;
-  font-weight: bold;
-  text-transform: uppercase;
 }
 
-.history-table tr:nth-child(even) {
-  background-color: #21262d;
-}
-
-.history-table tr:nth-child(odd) {
-  background-color: #0d1117;
-}
-
-.history-table tr:hover {
-  background-color: #292f36;
-  transition: background-color 0.3s ease;
-}
-
-/* No Bookings Message */
-.history-container p {
-  text-align: center;
-  font-size: 18px;
-  color: #c9d1d9;
-}
-
-/* Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
 }

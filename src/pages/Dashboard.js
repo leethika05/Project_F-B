@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
 import { useBooking } from '../context/BookingContext';
 import Navbar from '../components/Navbar';
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import './Dashboard.css';
+
 
 const generateRandomCycles = () => Math.floor(Math.random() * (30 - 25 + 1)) + 25;
 
@@ -18,12 +21,13 @@ const stations = [
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { balance, addMoney } = useWallet(); // Get balance from the wallet context
+  const { balance, addMoney } = useWallet();
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [message, setMessage] = useState('');
   const [updatedStations, setUpdatedStations] = useState(stations);
-  const { addBooking } = useBooking();
+  const db = getFirestore();
+  const auth = getAuth();
 
   const restrictedPairs = [
     ['PRP', 'SJT'],
@@ -33,31 +37,49 @@ const Dashboard = () => {
     ['CDMM', 'GDN'],
   ];
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (source && destination) {
       if (restrictedPairs.some(pair => pair.includes(source) && pair.includes(destination))) {
         setMessage(`❌ Booking between ${source} and ${destination} is not allowed.`);
         return;
       }
-
+  
       const sourceStation = updatedStations.find(station => station.name === source);
-      
+  
       if (sourceStation && sourceStation.availableCycles > 0) {
         if (balance >= 20) {
-          addMoney(-20); // Deduct from balance after booking
-          addBooking(source, destination, 20);
-
-          const updatedSourceStation = { ...sourceStation, availableCycles: sourceStation.availableCycles - 1 };
-
-          setUpdatedStations(prevStations =>
-            prevStations.map(station =>
-              station.name === source ? updatedSourceStation : station
-            )
-          );
-
-          setMessage(`✅ Cycle booked from ${source} to ${destination} successfully!`);
-          setSource('');
-          setDestination('');
+          addMoney(-20);
+  
+          const user = auth.currentUser;
+          if (!user) {
+            setMessage('⚠️ User not logged in.');
+            return;
+          }
+  
+          try {
+            await addDoc(collection(db, 'bookings'), {
+              userId: user.uid, // 🔥 FIXED FIELD NAME!
+              source,
+              destination,
+              cost: 20,
+              time: serverTimestamp(),
+            });
+  
+            const updatedSourceStation = { ...sourceStation, availableCycles: sourceStation.availableCycles - 1 };
+            setUpdatedStations(prevStations =>
+              prevStations.map(station =>
+                station.name === source ? updatedSourceStation : station
+              )
+            );
+  
+            console.log("✅ Booking saved to Firestore!");
+            setMessage(`✅ Cycle booked from ${source} to ${destination} successfully!`);
+            setSource('');
+            setDestination('');
+          } catch (error) {
+            setMessage('❌ Booking failed. Check your permissions.');
+            console.error('Booking error:', error);
+          }
         } else {
           setMessage('⚠️ Insufficient balance.');
         }
@@ -68,6 +90,7 @@ const Dashboard = () => {
       setMessage('⚠️ Please select both source and destination.');
     }
   };
+  
 
   return (
     <>

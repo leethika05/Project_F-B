@@ -1,39 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './ContactUs.css';
-import Navbar from '../components/Navbar'; // ✅ Import Navbar
+import Navbar from '../components/Navbar';
 
 const ContactUs = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('');
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setName(user.displayName || '');
+        setEmail(user.email || '');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (!name || !email || !message) {
-      setStatus('Please fill in all fields!');
+      setStatus('⚠️ Please fill in all fields!');
       return;
     }
-
-    setTimeout(() => {
-      setStatus('Message sent successfully!');
-      setName('');
-      setEmail('');
-      setMessage('');
-    }, 1000);
+  
+    const subject = `Contact from ${name}`;
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    );
+  
+    const mailtoLink = `mailto:sbarath2704@gmail.com?subject=${subject}&body=${body}`;
+  
+    window.location.href = mailtoLink;
+    setStatus('✅ Opening your mail client...');
   };
+  
 
   return (
     <div>
-      {/* ✅ Keep Navbar fixed at top */}
-      <Navbar /> 
-
+      <Navbar />
       <div className="contact-container">
         <h1 className="contact-title">Contact Us</h1>
-        
         <div className="contact-details">
-          <p><strong>Email:</strong> support@vitcycle.com</p>
+          <p><strong>Email:</strong> sbarath2704@gmail.com</p>
           <p><strong>Phone:</strong> +91 98765 43210</p>
         </div>
 
@@ -42,13 +56,13 @@ const ContactUs = () => {
             type="text"
             placeholder="Your Name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            readOnly
           />
           <input
             type="email"
             placeholder="Your Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            readOnly
           />
           <textarea
             placeholder="Write your message here..."

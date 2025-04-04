@@ -36,7 +36,6 @@ const Navbar = () => {
           <Link to="/contactus" className="nav-link">☎ ContactUs</Link>
         </li>
       </ul>
-
       <button className="logout-btn" onClick={handleLogout}>🚪 Logout</button>
     </nav>
   );

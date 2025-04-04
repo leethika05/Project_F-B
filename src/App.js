@@ -16,6 +16,7 @@ import Booking from './pages/Booking';
 import AddMoneyUPI from './pages/AddMoneyUPI'; // Import new UPI page
 
 
+
 const App = () => {
   return (
     <BookingProvider>
@@ -30,7 +31,7 @@ const App = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/wallet" element={<Wallet />} />
-              <Route path="/booking-history" element={<BookingHistory />} />
+              <Route path="/booking-history" element={<BookingHistory/>} />
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/booking" element={<Booking />} />
               <Route path="/add-money-upi" element={<AddMoneyUPI />} />

@@ -34,14 +34,18 @@ const Profile = () => {
       try {
         const user = auth.currentUser;
         if (user) {
+          setEmail(user.email);
+  
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
+  
           if (docSnap.exists()) {
             const data = docSnap.data();
             setName(data.name || '');
-            setEmail(data.email || '');
             setStudentId(data.studentId || '');
             setProfilePic(data.profilePic || '');
+          } else {
+            console.warn('No profile data found!');
           }
         }
       } catch (error) {
@@ -50,9 +54,11 @@ const Profile = () => {
         setLoading(false);
       }
     };
-
+  
     fetchProfile();
   }, []);
+  
+  
 
   // Crop complete callback
   const onCropComplete = (_, croppedPixels) => {
@@ -75,16 +81,22 @@ const Profile = () => {
     try {
       const user = auth.currentUser;
       if (!user) return;
-
+  
       const updatedData = {
         name,
         studentId,
         profilePic: newProfilePic || profilePic,
       };
-
+  
       await updateDoc(doc(db, 'users', user.uid), updatedData);
       await updateAuthProfile(user, { displayName: name });
-
+  
+      updateProfile({
+        name,
+        studentId,
+        profilePic: newProfilePic || profilePic,
+      });
+  
       setProfilePic(newProfilePic || profilePic);
       setNewProfilePic('');
       setSuccess('Profile updated successfully!');
@@ -94,7 +106,9 @@ const Profile = () => {
       setSuccess('Error updating profile.');
     }
   };
+  
 
+  
   // Cancel editing
   const handleCancel = () => {
     setEditMode(false);
