@@ -14,6 +14,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
     if (!email.endsWith('@vitstudent.ac.in')) {
       setError('Please use your VIT student email ID.');
       return;
