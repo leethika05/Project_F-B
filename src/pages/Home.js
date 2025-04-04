@@ -11,8 +11,8 @@ const Home = () => {
 
       {/* New Title */}
       <div className="new-title-section">
-        <h1 className="new-home-title">CYCLE BOOKING - VIT</h1>
-        <p className="new-caption">Let’s be on time</p>
+        <h1 className="new-home-title">BusPulse (VIT)</h1>
+        <p className="new-caption">Tap..Ride..Go..</p>
       </div>
 
       {/* Right Side Login Form */}

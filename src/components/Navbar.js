@@ -15,8 +15,8 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <h2 className="nav-title">
-        <img src="/cycle-logo.png" alt="Cycle Booking Logo" className="nav-logo" /> {/* ✅ Logo added */}
-        <b>Cycle Booking</b>
+        <img src="/cycle-logo.jpg" alt="Cycle Booking Logo" className="nav-logo" /> {/* ✅ Logo added */}
+        <b></b>
       </h2>
 
       <ul className="nav-list">
@@ -27,7 +27,7 @@ const Navbar = () => {
           <Link to="/wallet" className="nav-link">💰 Wallet</Link>
         </li>
         <li>
-          <Link to="/booking-history" className="nav-link">📅 Booking History</Link>
+          <Link to="/booking-history" className="nav-link">📅 Transaction History</Link>
         </li>
         <li>
           <Link to="/profile" className="nav-link">👤 Profile</Link>

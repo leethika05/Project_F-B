@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getFirestore, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { getDatabase, ref, get } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Navbar from '../components/Navbar';
 import './BookingHistory.css';
 
-const BookingHistory = () => {
-  const [bookings, setBookings] = useState([]);
+const TransactionHistory = () => {
+  const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const db = getFirestore();
+  const db = getDatabase();
   const auth = getAuth();
 
   useEffect(() => {
@@ -15,30 +15,25 @@ const BookingHistory = () => {
       if (user) {
         console.log("✅ Logged in as:", user.uid);
         try {
-          const q = query(
-            collection(db, 'bookings'),
-            where('userId', '==', user.uid),
-            orderBy('time', 'desc')
-          );
+          const userRef = ref(db, `users/${user.uid}/transactions`);
+          const snapshot = await get(userRef);
 
-          const querySnapshot = await getDocs(q);
-          console.log("📦 Bookings found:", querySnapshot.docs.length);
-
-          const userBookings = querySnapshot.docs.map(doc => {
-            const data = doc.data();
-            return {
-              id: doc.id,
+          if (snapshot.exists()) {
+            const transactionsData = Object.entries(snapshot.val()).map(([id, data]) => ({
+              id,
               ...data,
-              time: data.time?.toDate ? data.time.toDate() : null
-            };
-          });
+            }));
 
-          setBookings(userBookings);
+            setTransactions(transactionsData);
+          } else {
+            console.log("📦 No transactions found.");
+            setTransactions([]);
+          }
         } catch (error) {
-          console.error('❌ Error fetching bookings:', error);
+          console.error('❌ Error fetching transactions:', error);
         }
       } else {
-        setBookings([]);
+        setTransactions([]);
       }
       setLoading(false);
     });
@@ -50,18 +45,19 @@ const BookingHistory = () => {
     <>
       <Navbar />
       <div className="booking-history-container">
-        <h1>Booking History</h1>
+        <h1>Transaction History</h1>
         {loading ? (
           <p>Loading...</p>
-        ) : bookings.length === 0 ? (
-          <p>No bookings found.</p>
+        ) : transactions.length === 0 ? (
+          <p>No transactions found.</p>
         ) : (
           <ul>
-            {bookings.map((booking) => (
-              <li key={booking.id} className="booking-item">
-                <strong>From:</strong> {booking.source} <strong>To:</strong> {booking.destination}<br />
-                <strong>Cost:</strong> ₹{booking.cost} <br />
-                <strong>Time:</strong> {booking.time?.toLocaleString() || 'N/A'}
+            {transactions.map((transaction) => (
+              <li key={transaction.id} className="booking-item">
+                <strong>Transaction ID:</strong> {transaction.id} <br />
+                <strong>Amount:</strong> ₹{transaction.amount} <br />
+                <strong>Type:</strong> {transaction.type} <br />
+                <strong>Time:</strong> {transaction.time}
               </li>
             ))}
           </ul>
@@ -71,4 +67,4 @@ const BookingHistory = () => {
   );
 };
 
-export default BookingHistory;
+export default TransactionHistory;

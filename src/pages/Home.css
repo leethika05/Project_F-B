@@ -9,16 +9,17 @@
 }
 
 .new-title-section {
+
   position: absolute;
   top: 15px; /* Ensure the title is positioned near the top */
-  left: 50%;
+  left: 55%;
   margin-left: -15%; /* Horizontally center the title */
   text-align: center;
   z-index: 3;
   font-size: 23px; /* Adjust size to fit the top of the page */
   font-weight: 700; /* Bold weight for emphasis */
   color: #e04344; /* Vibrant red color */
-  letter-spacing: 2px; /* Slight letter spacing for clarity */
+  letter-spacing: 3px; /* Slight letter spacing for clarity */
   text-shadow: 0px 4px 8px rgba(224, 67, 68, 0.5), 0px 0px 20px rgba(255, 69, 58, 0.6); /* Soft glowing effect */
   animation: fadeInUp 1.5s ease-in-out, glowEffect 1.5s ease-in-out infinite alternate; /* Adding a glowing effect animation */
 }
