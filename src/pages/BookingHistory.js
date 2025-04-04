@@ -10,7 +10,6 @@ const TransactionHistory = () => {
   const db = getDatabase();
   const auth = getAuth();
 
-  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
