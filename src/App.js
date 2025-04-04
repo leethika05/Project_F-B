@@ -13,7 +13,11 @@ import Wallet from './pages/Wallet';
 import BookingHistory from './pages/BookingHistory';
 import ContactUs from './pages/ContactUs';
 import Booking from './pages/Booking';
-import AddMoneyUPI from './pages/AddMoneyUPI'; // Import new UPI page
+import AddMoneyUPI from './pages/AddMoneyUPI'; 
+import AboutUs from './components/AboutUs';
+
+// Inside your <Routes> block
+
 
 
 
@@ -35,6 +39,7 @@ const App = () => {
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/booking" element={<Booking />} />
               <Route path="/add-money-upi" element={<AddMoneyUPI />} />
+              <Route path="/about" element={<AboutUs />} />
             </Routes>
           </Router>
         </ProfileProvider>

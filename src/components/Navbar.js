@@ -35,6 +35,9 @@ const Navbar = () => {
         <li>
           <Link to="/contactus" className="nav-link">☎ ContactUs</Link>
         </li>
+        <li>
+        <Link to="/about"  className="nav-link"> ℹ️ About Us</Link>
+        </li>
       </ul>
       <button className="logout-btn" onClick={handleLogout}>🚪 Logout</button>
     </nav>
