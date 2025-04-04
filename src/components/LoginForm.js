@@ -1,29 +1,39 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
-import { FaEnvelope, FaLock, FaUserPlus, FaSignInAlt } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaSignInAlt } from 'react-icons/fa';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/firebase'; // Make sure this path is correct
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignup, setIsSignup] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (email.endsWith('@vitstudent.ac.in') && password.length >= 6) {
-      alert(`${isSignup ? 'Signed Up' : 'Logged In'} Successfully!`);
+    if (!email.endsWith('@vitstudent.ac.in')) {
+      setError('Please use your VIT student email ID.');
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert('Logged in successfully!');
       navigate('/dashboard');
-    } else {
-      alert('Invalid email or password');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Invalid email or password.');
     }
   };
 
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit}>
-        <h2>{isSignup ? <b>Sign Up</b> : <b>Login</b>}</h2>
+        <h2><b>Login</b></h2>
+
         <div className="input-group">
           <FaEnvelope className="input-icon" />
           <input
@@ -36,6 +46,7 @@ const LoginForm = () => {
             title="Please enter a valid VIT email ID"
           />
         </div>
+
         <div className="input-group">
           <FaLock className="input-icon" />
           <input
@@ -46,18 +57,20 @@ const LoginForm = () => {
             required
           />
         </div>
-        <button type="submit">
-          {isSignup ? <><FaUserPlus /> <b>Sign Up</b></> : <><FaSignInAlt /> <b>Login</b></>}
-        </button>
 
-        {/* ✅ Link to signup page */}
+        {error && <p className="error-message">{error}</p>}
+
+        <button type="submit">
+          <FaSignInAlt /> <b>Login</b>
+        </button>
         <p onClick={() => navigate('/signup')}>
-          {isSignup
-            ? <b>Already have an account? Login</b>
-            : <b>Don't have an account? Sign up</b>}
+          <b>Don't have an account? Sign up</b>
         </p>
 
-        {!isSignup && <p className="forgot-password"><b>Forgot Password?</b></p>}
+        <p className="forgot-password" onClick={() => navigate('/forgot-password')}>
+        <b>Forgot Password?</b>
+      </p>
+
       </form>
     </div>
   );
